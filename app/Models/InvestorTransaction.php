@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-
-class InvestorTransaction extends Model
+use App\Models\BaseModel;
+class InvestorTransaction extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'investor_id',
         'account_id',
         'transaction_type',

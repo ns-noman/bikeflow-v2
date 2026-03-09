@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class PaymentMethod extends Model
+class PaymentMethod extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'name',
         'is_virtual',
         'status',

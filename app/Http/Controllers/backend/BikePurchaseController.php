@@ -219,7 +219,7 @@ class BikePurchaseController extends Controller
             if($image){
                 $img_name = Str::uuid().'.'.$image->getClientOriginalExtension();
                 $image->move(public_path('uploads/'. 'new-bikes-imgs'), $img_name);
-                BikeAttributeImage::create(['image'=> $image, 'attribute_id'=> $attr_id]);
+                BikeAttributeImage::create(['image'=> $img_name, 'attribute_id'=> $attr_id]);
             }
         }
     }

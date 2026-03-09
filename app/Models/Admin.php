@@ -2,19 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticate;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Role;
 
 class Admin extends Authenticate
 {
     use HasFactory;
+
     protected $guard = 'admin';
-    protected $fillable = 
-    [
+
+    protected $fillable = [
+        'company_id',
+        'investor_id',
         'name',
         'type',
-        'investor_id',
         'mobile',
         'username',
         'email',
@@ -22,6 +24,7 @@ class Admin extends Authenticate
         'image',
         'status',
     ];
+
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -30,4 +33,4 @@ class Admin extends Authenticate
     {
         return $this->belongsTo(Role::class, 'type');
     }
-}       
+}

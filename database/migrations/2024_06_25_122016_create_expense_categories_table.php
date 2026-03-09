@@ -10,9 +10,11 @@ return new class extends Migration
     {
         Schema::create('expense_categories', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('cat_name');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down(): void

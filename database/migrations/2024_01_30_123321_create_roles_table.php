@@ -10,10 +10,13 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->tinyInteger('is_superadmin')->default(0);
             $table->integer('created_by')->nullable();
             $table->string('role');
             $table->timestamps();
+
+            $table->index('company_id');
         });
     }
     public function down()

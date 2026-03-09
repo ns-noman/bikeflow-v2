@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('name',50);
             $table->string('username',30)->nullable();
             $table->integer('type');
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('status');
             $table->timestamps();
             $table->rememberToken();
+            $table->index('company_id');
         });
     }
     public function down()

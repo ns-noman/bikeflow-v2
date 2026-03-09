@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class InvestorLedger extends Model
+use App\Models\BaseModel;
+class InvestorLedger extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'investor_id',
         'account_id',
         'particular',

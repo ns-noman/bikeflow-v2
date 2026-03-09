@@ -5,11 +5,10 @@ namespace App\Http\Controllers\backend;
 use App\Models\Role;
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\File;
-use Auth;
+use Auth;   
 use Hash;
 
 class AdminController extends Controller
@@ -41,8 +40,7 @@ class AdminController extends Controller
             return redirect()->back()->with('alert',['messageType'=>'danger','message'=>'This email is already exists!']);
         }
         $data['password'] = Hash::make($data['password']);
-        $data['mobile'] = 'User';
-        $data['mobile'] = '01839317038';
+        $data['company_id'] = Auth::guard('admin')->user()->company_id;
         Admin::create($data);
         return redirect()->route('admins.index')->with('alert',['messageType'=>'success','message'=>'User Inserted Successfully!']);
     }
@@ -177,6 +175,7 @@ class AdminController extends Controller
     {
         $query = Admin::join('roles', 'roles.id', '=', 'admins.type')
                     ->where('roles.is_superadmin', 0)
+                    ->where('admins.company_id', Auth::guard('admin')->user()->company_id)
                     ->select('admins.id', 'admins.name', 'roles.role', 'admins.mobile', 'admins.email', 'admins.status');
                     if(!$request->has('order')) $query = $query->orderBy('id','desc');
         return DataTables::of($query)->make(true);

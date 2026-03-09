@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->bigInteger('payment_method_id');
             $table->string('account_no')->nullable();
             $table->string('holder_name')->nullable();
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('created_by_id')->nullable();
             $table->bigInteger('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

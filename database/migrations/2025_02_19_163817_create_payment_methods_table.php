@@ -10,12 +10,14 @@ return new class extends Migration
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('name')->nullable();
             $table->tinyInteger('is_virtual')->default(0);
             $table->tinyInteger('status')->default(1)->comment('1=active, 0=inactive');
             $table->bigInteger('created_by_id')->nullable();
             $table->bigInteger('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

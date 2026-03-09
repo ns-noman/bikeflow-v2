@@ -11,6 +11,7 @@ return new class extends Migration
     {
         Schema::create('fund_transfer_histories', function (Blueprint $table) {
             $table->id();
+            $table->integer('company_id');
             $table->date('transfer_date')->useCurrent();
             $table->unsignedBigInteger('from_account_id');
             $table->unsignedBigInteger('to_account_id');

@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Auth;
-
-class ExpenseHead extends Model
+use App\Models\BaseModel;
+class ExpenseHead extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'expense_category_id',
         'title',
         'code',

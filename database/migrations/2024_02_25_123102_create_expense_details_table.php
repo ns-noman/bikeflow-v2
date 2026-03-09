@@ -10,12 +10,14 @@ return new class extends Migration
     {
         Schema::create('expense_details', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->integer('expense_id');
             $table->integer('expense_head_id');
             $table->decimal('amount',20,2);
             $table->decimal('quantity',10,2);
             $table->string('note')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
 

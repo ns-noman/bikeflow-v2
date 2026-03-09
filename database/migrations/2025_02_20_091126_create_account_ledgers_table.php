@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('account_ledgers', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->bigInteger('account_id');
             $table->double('debit_amount', 20, 2)->nullable()->comment('Withdrawal');
             $table->double('credit_amount', 20, 2)->nullable()->comment('Deposit');
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('transaction_date')->useCurrent();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

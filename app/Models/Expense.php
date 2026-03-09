@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-
-class Expense extends Model
+use App\Models\BaseModel;
+class Expense extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'account_id',
         'expense_no',
         'date',

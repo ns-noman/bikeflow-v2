@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class AccountLedger extends Model
+class AccountLedger extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'account_id',
         'debit_amount',
         'credit_amount',

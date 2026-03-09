@@ -10,12 +10,18 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Services\SystemService;
 use Auth;
 
 class RoleController extends Controller
 {
     protected $breadcrumb;
-    public function __construct(){$this->breadcrumb = ['title'=>'Roles'];}
+    protected $ss;
+    public function __construct(SystemService $systemService)
+    {
+        $this->breadcrumb = ['title'=>'Roles'];
+        $this->ss = $systemService;
+    }
     public function index()
     {
         $data['breadcrumb'] = $this->breadcrumb;
@@ -85,7 +91,6 @@ class RoleController extends Controller
     public function allRoles(Request $request)
     {
         $query = Role::join('admins', 'roles.created_by', '=', 'admins.id')
-                        // ->where('is_superadmin',0)
                         ->where('is_default',0)
                         ->select('roles.id', 'admins.name', 'roles.role');
             if(!$request->has('order')) $query = $query->orderBy('id','desc');
