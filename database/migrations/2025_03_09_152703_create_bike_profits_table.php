@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('bike_profits', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->bigInteger('bike_sale_id');
             $table->bigInteger('investor_id');
             $table->decimal('profit_amount', 20,2)->default(0.00);
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('created_by_id')->nullable();
             $table->bigInteger('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

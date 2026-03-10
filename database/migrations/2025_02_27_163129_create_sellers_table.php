@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('name');
             $table->string('contact')->nullable();
             $table->string('nid')->nullable();
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('seller_type')->default(0)->comment('0=general seller, 1=broker');
             $table->unsignedTinyInteger('status')->default(1)->comment('0=inactive, 1=active');
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

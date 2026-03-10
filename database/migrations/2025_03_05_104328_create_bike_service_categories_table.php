@@ -10,9 +10,11 @@ return new class extends Migration
     {
         Schema::create('bike_service_categories', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('name');
             $table->unsignedTinyInteger('status')->default(1)->comment('0=Inactive, 1=Active');
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

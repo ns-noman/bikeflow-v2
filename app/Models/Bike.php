@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Bike extends Model
+class Bike extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'bike_attribute_id',
         'brand_id',
         'model_id',
@@ -30,6 +31,4 @@ class Bike extends Model
             }
         });
     }
-
-
 }

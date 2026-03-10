@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('bike_service_records', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('invoice_no')->nullable();
             $table->bigInteger('bike_purchase_id')->nullable();
             $table->bigInteger('customer_id')->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->bigInteger('created_by_id')->nullable();
             $table->bigInteger('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('party_ledgers', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->integer('party_id');
             $table->integer('loan_id')->nullable();
             $table->tinyInteger('loan_type')->comment('0 = loan_given, 1 = loan_taken');
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->integer('created_by_id')->nullable();
             $table->integer('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

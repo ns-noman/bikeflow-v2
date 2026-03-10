@@ -31,19 +31,73 @@ class BikeServiceController extends Controller
         $data['categories'] = BikeServiceCategory::where('status', 1)->select('id','name')->get()->toArray();
         return view('backend.bike-services.create-or-edit',compact('data'));
     }
-    
+
     public function store(Request $request)
     {
-        $data = $request->all();
-        BikeService::create($data);
-        return redirect()->route('bike-services.index')->with('alert',['messageType'=>'success','message'=>'Data Inserted Successfully!']);
+        $request->validate([
+            'bike_service_category_id' => 'required|integer|exists:bike_service_categories,id',
+            'name' => 'required|string|max:255',
+            'trade_price' => 'nullable|numeric|min:0',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:0,1'
+        ]);
+
+        try {
+
+            $data = $request->all();
+            $data['trade_price'] = $data['trade_price'] ?? 0;
+
+            BikeService::create($data);
+
+            return redirect()->route('bike-services.index')
+                ->with('alert', [
+                    'messageType' => 'success',
+                    'message' => 'Data Inserted Successfully!'
+                ]);
+
+        } catch (Exception $e) {
+
+            return redirect()->back()
+                ->withInput()
+                ->with('alert', [
+                    'messageType' => 'danger',
+                    'message' => 'Something went wrong!'
+                ]);
+        }
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $data = $request->all();
-        BikeService::find($id)->update($data);
-        return redirect()->route('bike-services.index')->with('alert',['messageType'=>'success','message'=>'Data Updated Successfully!']);
+        $request->validate([
+            'bike_service_category_id' => 'required|integer|exists:bike_service_categories,id',
+            'name' => 'required|string|max:255',
+            'trade_price' => 'nullable|numeric|min:0',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:0,1'
+        ]);
+
+        try {
+
+            $data = $request->all();
+            $data['trade_price'] = $data['trade_price'] ?? 0;
+
+            BikeService::findOrFail($id)->update($data);
+
+            return redirect()->route('bike-services.index')
+                ->with('alert', [
+                    'messageType' => 'success',
+                    'message' => 'Data Updated Successfully!'
+                ]);
+
+        } catch (Exception $e) {
+
+            return redirect()->back()
+                ->withInput()
+                ->with('alert', [
+                    'messageType' => 'danger',
+                    'message' => 'Something went wrong!'
+                ]);
+        }
     }
     
  

@@ -10,11 +10,13 @@ return new class extends Migration
     {
         Schema::create('bike_service_record_details', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->bigInteger('bike_service_record_id');
             $table->bigInteger('service_id');
             $table->integer('quantity');
             $table->decimal('price',20,2);
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

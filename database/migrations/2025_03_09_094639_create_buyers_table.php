@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('buyers', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('name');
             $table->string('contact')->nullable();
             $table->string('nid')->nullable();
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->string('bcn_no')->nullable();
             $table->unsignedTinyInteger('status')->default(1)->comment('0=Inactive, 1=Active');
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

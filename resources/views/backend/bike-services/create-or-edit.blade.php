@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Sale Price *</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->price : null }}" type="number" class="form-control" name="price" placeholder="0.00">
+                                            <input value="{{ isset($data['item']) ? $data['item']->price : null }}" type="number" class="form-control" name="price" placeholder="0.00" required>
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Status *</label>

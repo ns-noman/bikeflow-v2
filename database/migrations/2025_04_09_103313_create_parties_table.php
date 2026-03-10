@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('parties', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->integer('created_by_id')->nullable();
             $table->integer('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

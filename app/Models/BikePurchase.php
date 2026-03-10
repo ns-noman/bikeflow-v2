@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use Auth;
 
-class BikePurchase extends Model
+class BikePurchase extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'investor_id',
         'bike_id',
         'account_id',

@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->integer('supplier_id');
             $table->bigInteger('account_id')->nullable();
             $table->string('vouchar_no');
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->integer('created_by_id')->nullable();
             $table->integer('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down(): void

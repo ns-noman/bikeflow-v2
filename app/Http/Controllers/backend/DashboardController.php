@@ -43,7 +43,7 @@ class DashboardController extends Controller
         
         $data['investor_bike'] = BikePurchase::where('purchase_status', 1)
                                 ->where('selling_status', 0)
-                                ->where('investor_id', '!=', 1)
+                                ->where('investor_id', '!=', Auth::guard('admin')->user()->investor_id)
                                 ->count();
         
         $data['my_bike'] = BikePurchase::where('purchase_status', 1)

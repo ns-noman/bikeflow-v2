@@ -10,11 +10,13 @@ return new class extends Migration
     {
         Schema::create('purchase_details', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->integer('purchase_id');
             $table->integer('item_id');
             $table->decimal('quantity',20,2);
             $table->decimal('unit_price',20,2);
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down(): void

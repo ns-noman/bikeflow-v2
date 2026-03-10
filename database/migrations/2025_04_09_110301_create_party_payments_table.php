@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('party_payments', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->bigInteger('party_id');
             $table->bigInteger('account_id');
             $table->tinyInteger('payment_type')->comment('0=paid to party, 1=collection from party');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->integer('created_by_id')->nullable();
             $table->integer('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

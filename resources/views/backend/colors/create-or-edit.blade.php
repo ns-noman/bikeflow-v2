@@ -23,7 +23,7 @@
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Hex Code</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->hex_code : null }}" type="text" class="form-control" name="hex_code" placeholder="Hex Code">
+                                            <input value="{{ isset($data['item']) ? $data['item']->hex_code : null }}" type="color" class="form-control" name="hex_code" placeholder="Hex Code">
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Status *</label>

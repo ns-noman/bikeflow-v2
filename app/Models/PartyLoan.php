@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class PartyLoan extends Model
+class PartyLoan extends BaseModel
 {
     use HasFactory;
     protected $fillable = 
     [
+        'company_id',
         'party_id',
         'account_id',
         'loan_no',

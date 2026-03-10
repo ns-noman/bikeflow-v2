@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('party_loans', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->unsignedBigInteger('party_id');
             $table->unsignedBigInteger('account_id')->nullable();
             $table->string('loan_no')->unique();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->unsignedInteger('created_by_id')->nullable();
             $table->unsignedInteger('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()

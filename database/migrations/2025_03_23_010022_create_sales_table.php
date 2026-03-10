@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_id');
             $table->integer('customer_id')->nullable();
             $table->string('bike_reg_no')->nullable();
             $table->bigInteger('account_id')->nullable();
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->integer('created_by_id')->nullable();
             $table->integer('updated_by_id')->nullable();
             $table->timestamps();
+            $table->index('company_id');
         });
     }
     public function down()
