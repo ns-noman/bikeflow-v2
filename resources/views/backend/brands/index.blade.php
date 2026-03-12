@@ -21,6 +21,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>SN</th>
+                                                    <th>Logo</th>
                                                     <th>Name</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
@@ -28,14 +29,6 @@
                                             </thead>
                                             <tbody>
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>SN</th>
-                                                    <th>Name</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -48,49 +41,70 @@
     </div>
 @endsection
 @section('script')
-    <script>
-        $(document).ready(function(){
+<script>
+    $(document).ready(function(){
             const options = {};
             options.url = '{{ route("brands.list") }}';
             options.type = 'GET';
-            options.columns = 
-                    [
-                        { data: null, orderable: false, searchable: false },
-                        { data: 'name', name: 'brands.name'},
-                        { 
-                            data: null, 
-                            name: 'brands.status', 
-                            orderable: true, 
-                            searchable: false, 
-                            render: function(data, type, row, meta) {
-                               return `<span class="badge badge-${row.status == '1' ? 'success' : 'warning'}">${row.status == '1' ? 'Active' : 'Inactive'}</span>`;
-                            }
-                        },
-                        { 
-                            data: null,
-                            orderable: false, 
-                            searchable: false, 
-                            render: function(data, type, row, meta) {
-                                let edit = `{{ route('brands.edit', ":id") }}`.replace(':id', row.id);
-                                let destroy = `{{ route('brands.destroy', ":id") }}`.replace(':id', row.id);
+            options.columns =[
+            { data: null, orderable: false, searchable: false },
 
-                                return (` <div class="d-flex justify-content-center">
-                                                <a href="${edit}"
-                                                    class="btn btn-sm btn-info">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                </a>
-                                                <form class="delete" action="${destroy}" method="post" hidden>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        `);
-                            }
-                        }
-                    ];
+            {
+                data: 'logo',
+                name: 'brands.logo',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    const src = `{{ asset('public/uploads/brands/:file') }}`.replace(':file', data);
+                    if(!data){
+                        return `-`;
+                    }
+
+                    return `<img src="${src}" width="100" class="img-thumbnail">`;
+                }
+            },
+
+            { data: 'name', name: 'brands.name'},
+
+            { 
+                data: null, 
+                name: 'brands.status', 
+                orderable: true, 
+                searchable: false, 
+                render: function(data, type, row) {
+                return `<span class="badge badge-${row.status == '1' ? 'success' : 'warning'}">
+                            ${row.status == '1' ? 'Active' : 'Inactive'}
+                        </span>`;
+                }
+            },
+
+            { 
+                data: null,
+                orderable: false, 
+                searchable: false, 
+                render: function(data, type, row) {
+
+                    let edit = `{{ route('brands.edit', ":id") }}`.replace(':id', row.id);
+                    let destroy = `{{ route('brands.destroy', ":id") }}`.replace(':id', row.id);
+
+                    return `
+                        <div class="d-flex justify-content-center">
+                            <a href="${edit}" class="btn btn-sm btn-info">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+
+                            <form class="delete" action="${destroy}" method="post" hidden>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </form>
+                        </div>
+                    `;
+                }
+            }
+        ];
             options.processing = true;
             dataTable(options);
         });

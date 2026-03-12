@@ -22,6 +22,16 @@
                                             <input value="{{ isset($data['item']) ? $data['item']->name : null }}" type="text" class="form-control" name="name" placeholder="Brand Name" required>
                                         </div>
                                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                                            <label>Brand Logo @if(!isset($data['item']))
+                                                    *
+                                                @endif</label>
+                                            <input value="{{ isset($data['item']) ? $data['item']->logo : null }}" type="file" class="form-control" name="logo" placeholder="Brand Name"
+                                                @if(!isset($data['item']))
+                                                    required
+                                                @endif
+                                            >
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12">
                                             <label>Status *</label>
                                             <select name="status" id="status" class="form-control">
                                                 <option @selected(($data['item']->status ?? null) === 1) value="1">Active</option>

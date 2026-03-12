@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 10, 2026 at 09:43 AM
+-- Generation Time: Mar 12, 2026 at 10:08 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -1038,7 +1038,7 @@ CREATE TABLE `basic_infos` (
 --
 
 INSERT INTO `basic_infos` (`id`, `title`, `meta_keywords`, `meta_description`, `logo`, `favicon`, `phone`, `telephone`, `fax`, `email`, `location`, `address`, `web_link`, `facebook_link`, `twitter_link`, `linkedin_link`, `youtube_link`, `assets_value`, `total_employees`, `total_companies`, `start_year`, `map_embed`, `video_embed_1`, `video_embed_2`, `video_embed_3`, `currency_symbol`, `created_at`, `updated_at`) VALUES
-(1, 'রি-স্টার্ট', 'In consequuntur quib', 'Iusto Nam consectetu', 'logo-1748061733.png', 'favicon-1748061733.png', '+88 01682 600 062', '456', '23456', 'restart.bd24@gmail.com', 'Velit quia corrupti', 'দোকান # ৩৫৭, পূর্ব রামপুরা\nডিআইটি রোড, রামপুরা, ঢাকা-১২১৯.', 'Quia atque nostrum q', 'Enim neque culpa ex', 'Deserunt odio cum ad', 'Deserunt in ducimus', 'Obcaecati autem reru', 60, 23, 72, 1993, 'Sit placeat et ut o', 'Vel dolore necessita', 'Consequuntur ex nesc', 'Proident dolore off', '৳', NULL, '2025-05-24 04:42:13');
+(1, 'BikelyBD', 'In consequuntur quib', 'Iusto Nam consectetu', 'logo-1748061733.png', 'favicon-1748061733.png', '+88 01839 317038', '456', '23456', 'bikelybd@gmail.com', 'Velit quia corrupti', 'Shop #357, East Rampura,\r\nDIT Road, Rampura, Dhaka-1219, Bangladesh.', 'Quia atque nostrum q', 'Enim neque culpa ex', 'Deserunt odio cum ad', 'Deserunt in ducimus', 'Obcaecati autem reru', 60, 23, 72, 1993, 'Sit placeat et ut o', 'Vel dolore necessita', 'Consequuntur ex nesc', 'Proident dolore off', '৳', NULL, '2026-03-12 03:49:53');
 
 -- --------------------------------------------------------
 
@@ -4123,15 +4123,31 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `logo`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Yamaha', NULL, 1, '2025-02-27 03:45:36', '2025-02-27 03:47:53'),
-(2, 'Honda', NULL, 1, '2025-02-27 03:45:43', '2025-02-27 03:46:33'),
-(3, 'Hero', NULL, 1, '2025-02-27 03:47:19', '2025-05-25 08:29:07'),
-(4, 'Bajaj', NULL, 1, '2025-02-27 03:47:29', '2025-05-25 08:28:53'),
-(5, 'TVS', NULL, 1, '2025-02-27 03:47:47', '2025-05-25 08:28:40'),
-(6, 'Suzuki', NULL, 1, '2025-05-25 08:29:19', '2025-05-25 08:29:19'),
-(7, 'GPX', NULL, 1, '2025-05-25 08:29:33', '2025-05-25 08:29:33'),
-(8, 'Royal Enfield', NULL, 1, '2025-05-25 09:09:44', '2025-05-25 09:09:44'),
-(9, 'CF Moto', NULL, 1, '2026-01-30 09:21:05', '2026-01-30 09:21:05');
+(1, 'Yamaha', '744199e2-b6ac-42be-8c7f-6ffe8c114c52.webp', 1, '2025-02-27 03:45:36', '2026-03-12 04:56:39'),
+(2, 'Honda', '02f6ceb8-f48d-4d9f-911d-346512400619.webp', 1, '2025-02-27 03:45:43', '2026-03-12 04:55:38'),
+(3, 'Hero', 'befaef30-c9fc-43a1-8fd2-f268870cce5e.webp', 1, '2025-02-27 03:47:19', '2026-03-12 04:56:23'),
+(4, 'Bajaj', '3e12b336-7b4d-487c-a1eb-9eb818e9e8d1.webp', 1, '2025-02-27 03:47:29', '2026-03-12 04:54:40'),
+(5, 'TVS', '8fdc230a-ebb5-4c67-9d0a-df26df9ad14d.webp', 1, '2025-02-27 03:47:47', '2026-03-12 04:53:23'),
+(6, 'Suzuki', '05c9a1d2-ce01-41f1-b5ad-0a3fc6fd9ba6.webp', 1, '2025-05-25 08:29:19', '2026-03-12 04:28:27'),
+(7, 'GPX', '122989d3-35ef-48b5-b8b2-97617a043b13.webp', 1, '2025-05-25 08:29:33', '2026-03-12 04:52:55'),
+(8, 'Royal Enfield', 'da61a6d1-9deb-4a77-8a1a-b75216b12a9c.webp', 1, '2025-05-25 09:09:44', '2026-03-12 04:52:32'),
+(9, 'CF Moto', 'db81fb09-4c5b-4001-b770-f8d5124b3dd7.webp', 1, '2026-01-30 09:21:05', '2026-03-12 04:50:27'),
+(10, 'Revoo', 'bff71649-5325-4bb5-ba8f-c54e4eb16795.webp', 1, '2026-03-12 04:35:50', '2026-03-12 04:50:10'),
+(11, 'Nasir Syntax Motor', 'f3905f17-99fb-4a4d-b2a0-1ed7eff81b0b.webp', 1, '2026-03-12 05:01:58', '2026-03-12 05:02:14'),
+(12, 'RUNNER', '5cb50df3-9e7b-4ea9-a9e0-cc4515fe29b1.webp', 1, '2026-03-12 05:03:21', '2026-03-12 05:04:46'),
+(13, 'KTM', 'c46984ab-d4d5-44da-8e7e-621cc40750ff.webp', 1, '2026-03-12 05:05:16', '2026-03-12 05:05:16'),
+(14, 'Hyosung', 'd061388a-928a-4107-a55a-4ccbd8664398.webp', 1, '2026-03-12 05:05:42', '2026-03-12 05:05:42'),
+(15, 'Lifan', '406b736c-31ef-4f3f-b1d9-da83dab904bf.webp', 1, '2026-03-12 05:06:02', '2026-03-12 05:06:02'),
+(16, 'QJ-Moto', 'e96f0525-9d74-471d-9297-46fefd83db32.webp', 1, '2026-03-12 05:06:52', '2026-03-12 05:06:52'),
+(17, 'Keeway', 'fe5e01f2-f219-4901-8ed4-48b13d5b9f45.png', 1, '2026-03-12 05:07:23', '2026-03-12 05:07:23'),
+(18, 'Taro', 'f16d4ab2-afa3-4204-b074-311f920167da.webp', 1, '2026-03-12 05:07:48', '2026-03-12 05:07:48'),
+(19, 'Vespa', 'd366c412-0aac-43b7-8348-e720fa4ad83e.png', 1, '2026-03-12 05:08:08', '2026-03-12 05:08:08'),
+(20, 'Road Master', 'b4622c6d-8fb6-451a-8c3d-8622a082269f.png', 1, '2026-03-12 05:08:35', '2026-03-12 05:08:35'),
+(21, 'H Power', 'd72c11c1-9ef8-40fe-92e3-f75bc85cc73e.webp', 1, '2026-03-12 05:09:02', '2026-03-12 05:09:02'),
+(22, 'Speeder', '315c2cc5-c6d6-4e07-9484-99e29b43fcd4.png', 1, '2026-03-12 05:09:23', '2026-03-12 05:09:23'),
+(23, 'FKM', '65732e0b-c3a7-4355-a485-6cf8661b2939.png', 1, '2026-03-12 05:09:56', '2026-03-12 05:09:56'),
+(24, 'ZNEN', 'd4be2b54-9042-4106-ac36-dd1788cd4cc4.png', 0, '2026-03-12 05:10:19', '2026-03-12 07:42:25'),
+(25, 'php', '267b0388-e845-4802-87d8-c34569e509f5.png', 1, '2026-03-12 05:10:43', '2026-03-12 05:10:43');
 
 -- --------------------------------------------------------
 
@@ -7817,7 +7833,7 @@ ALTER TABLE `bike_service_record_details`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `buyers`

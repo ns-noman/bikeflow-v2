@@ -4,6 +4,9 @@
 /admin/*
 !/admin/placeholder.png
 
+# /brands/*
+# !/admin/placeholder.png
+
 /bike-purchases/*
 !/bike-purchases/placeholder.png
 
