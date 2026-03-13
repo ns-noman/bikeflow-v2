@@ -6,7 +6,7 @@
                             ->get()
                             ->toArray();
 @endphp
-<aside class="main-sidebar sidebar-dark-primary elevation-0 bg-warning">
+<aside class="main-sidebar sidebar-dark-primary elevation-0 bg-info">
     <a href="{{ route('profile.update-details') }}" class="brand-link">
         <img src="{{ $userImage }}" alt="{{ $basicInfo->title }} Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8" height="30" width="30">
