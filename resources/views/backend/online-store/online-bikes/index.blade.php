@@ -1,5 +1,13 @@
 @extends('layouts.admin.master')
 @section('content')
+<style>
+    .swal2-input[type="date"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+</style>
 <div class="content-wrapper">
     @include('layouts.admin.content-header')
     <section class="content">
@@ -9,7 +17,7 @@
                     <div class="card">
                         <div class="card-header bg-primary p-1">
                             <h3 class="card-title">
-                                <a href="{{ route('bike-purchases.create') }}"class="btn btn-light shadow rounded m-0"><i
+                                <a href="{{ route('online-bikes.create') }}"class="btn btn-light shadow rounded m-0"><i
                                         class="fas fa-plus"></i>
                                     <span>Add New</span></i></a>
                             </h3>
@@ -23,23 +31,20 @@
                                                 <th>SN</th>
                                                 <th>Date</th>
                                                 <th>Bike Info</th>
-                                                <th>Condition</th>
-                                                <th>Seller</th>
-                                                <th>Investor</th>
-                                                <th>Price</th>
-                                                <th>Servicing Cost</th>
-                                                <th>Total Cost</th>
+                                                <th>Buyer Name</th>
+                                                <th>Sale Price</th>
                                                 <th>Payment Method</th>
                                                 <th>Reference No</th>
-                                                <th>Creator</th>
                                                 <th>NID</th>
                                                 <th>Reg Card</th>
                                                 <th>Photo</th>
                                                 <th>Deed</th>
-                                                <th>Tax Token</th>
+                                                <th>TaxToken</th>
                                                 <th>Note</th>
-                                                <th>Selling Status</th>
-                                                <th>Purchase Status</th>
+                                                <th>Created By</th>
+                                                <th>Name Transfer Status/Date</th>
+                                                <th>Repurchase Status</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -63,56 +68,37 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: '{{ route("bike-purchases.list") }}',
+                url: '{{ route("online-bikes.list") }}',
                 type: 'GET',
             },
             columns: [
                         { data: null, orderable: false, searchable: false },
-                        { data: 'purchase_date', name: 'bike_purchases.purchase_date'},
+                        { data: 'sale_date', name: 'bike_sales.sale_date'},
                         {
                             data: null, 
                             name: 'bike_models.name', 
                             orderable: true, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
-                                return `${row.model_name} <span class="badge" style="background-color: ${row.hex_code};color: black; text-shadow: 2px 0px 8px white;">${row.color_name}</span>
-                                <br>Ch#${row.chassis_no}
-                                <br>Reg#${row.registration_no}`;
+                                return `${row.model_name} <span class="badge" style="background-color: ${row.hex_code};color: black; text-shadow: 2px 0px 8px white;">${row.color_name}</span><br>Ch#${row.chassis_no}<br>Reg#${row.registration_no}`;
                             }
                         },
-                        {
-                            data: 'condition',
-                            name: 'bike_purchases.condition', 
-                            orderable: true, 
-                            searchable: false, 
-                            render: function(data, type, row, meta) {
-                                return `<span class="badge badge-${row.condition == '2' ? 'danger' : 'success'}">${row.condition == '2' ? 'Used' : 'New'}</span>`;
-                            }
-                        },
-                        { data: 'seller_name', name: 'sellers.name'},
-                        { data: 'investor_name', name: 'investors.name'},
-                        { data: 'purchase_price', name: 'bike_purchases.purchase_price'},
-                        { data: 'servicing_cost', name: 'bike_purchases.servicing_cost'},
-                        { data: 'total_cost', name: 'bike_purchases.total_cost'},
+                        { data: 'buyer_name', name: 'buyers.name'},
+                        { data: 'sale_price', name: 'bike_sales.sale_price'},
                         { data: 'payment_method', name: 'payment_methods.name'},
-                        { data: 'reference_number', name: 'bike_purchases.reference_number'},
-                  
-                     
-                        { data: 'creator_name', name: 'admins.name'},
-
-                        {
-                            data: null,
-                            name: 'bike_purchases.doc_nid',
-                            orderable: false,
-                            searchable: false,
-                            render: function(data, type, row, meta) {
-                                return generateTag(row.doc_nid);
-                            }
-                        },
-
+                        { data: 'reference_number', name: 'bike_sales.reference_number'},
                         {
                             data: null, 
-                            name: 'bike_purchases.doc_reg_card', 
+                            name: 'bike_sales.doc_nid', 
+                            orderable: false, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                               return generateTag(row.doc_nid);
+                            }
+                        },
+                        {
+                            data: null, 
+                            name: 'bike_sales.doc_reg_card', 
                             orderable: false, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
@@ -121,7 +107,7 @@
                         },
                         {
                             data: null, 
-                            name: 'bike_purchases.doc_image', 
+                            name: 'bike_sales.doc_image', 
                             orderable: false, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
@@ -130,7 +116,7 @@
                         },
                         {
                             data: null, 
-                            name: 'bike_purchases.doc_deed', 
+                            name: 'bike_sales.doc_deed', 
                             orderable: false, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
@@ -139,47 +125,70 @@
                         },
                         {
                             data: null, 
-                            name: 'bike_purchases.doc_tax_token', 
+                            name: 'bike_sales.doc_tax_token', 
                             orderable: false, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
                                 return generateTag(row.doc_tax_token);
                             }
                         },
-
-                        { data: 'note', name: 'bike_purchases.note'},
+                        { data: 'note', name: 'bike_sales.note'},
+                        { data: 'creator_name', name: 'admins.name'},
                         {
                             data: null, 
-                            name: 'bike_purchases.selling_status', 
-                            orderable: true, 
-                            searchable: false, 
-                            render: function(data, type, row, meta) {
-                                let color;
-                                let text;
-                                if(row.selling_status == '0'){
-                                    color = 'warning';
-                                    text = 'Unsold';
-                                }else if(row.selling_status == '1'){
-                                    color = 'info';
-                                    text = 'Sold';
-                                }
-                                return `<span class="badge badge-${color}">${text}</span>`;
-                            }
-                        },
-                        {
-                            data: null, 
-                            name: 'bike_purchases.purchase_status', 
+                            name: 'bike_sales.is_name_transfered', 
                             orderable: true, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
                                 let color;
                                 let text;
                                 let eventClass = '';
-                                if(row.purchase_status == '0'){
+                                if(row.is_name_transfered == '0'){
+                                    color = 'danger';
+                                    text = 'Transfer';
+                                    eventClass = 'nametransfer';
+                                }else if(row.is_name_transfered == '1'){
+                                    color = 'primary';
+                                    text = row.name_transfer_date;
+                                }
+                                return `<button transaction_id=${row.id} type="button" class="btn btn-sm btn-${color} ${eventClass}">${text}</button>`;
+                            }
+                        },
+                        {
+                            data: null, 
+                            name: 'bike_sales.is_repurchased', 
+                            orderable: true, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                                let repurchase = `{{ route('bike-purchases.repurchase', [":id", ":sale_id"]) }}`.replace(':id', 0).replace(':sale_id', row.id);
+
+                                let color;
+                                let text;
+                                let eventClass = '';
+                                if(row.is_repurchased == '0'){
+                                    color = 'warning';
+                                    text = 'Repurchase';
+                                }else if(row.is_repurchased == '1'){
+                                    color = 'info';
+                                    text = 'Repurchased';
+                                }
+                                return `<a href="${row.is_repurchased == '0' ? repurchase : 'javascript:void(0)'}" class="btn btn-sm btn-${color}">${text}</a>`;
+                            }
+                        },
+                        {
+                            data: null, 
+                            name: 'bike_sales.status', 
+                            orderable: true, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                                let color;
+                                let text;
+                                let eventClass = '';
+                                if(row.status == '0'){
                                     color = 'danger';
                                     text = 'Pending';
                                     eventClass = 'event';
-                                }else if(row.purchase_status == '1'){
+                                }else if(row.status == '1'){
                                     color = 'success';
                                     text = 'Approved';
                                 }
@@ -191,24 +200,24 @@
                             orderable: false, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
-                                let view = `{{ route('bike-purchases.invoice', ":id") }}`.replace(':id', row.id);
-                                let print = `{{ route('bike-purchases.invoice.print', [":id","print"]) }}`.replace(':id', row.id);
-                                let edit = `{{ route('bike-purchases.edit', ":id") }}`.replace(':id', row.id);
-                                let destroy = `{{ route('bike-purchases.destroy', ":id") }}`.replace(':id', row.id);
+                                let view = `{{ route('online-bikes.invoice', ":id") }}`.replace(':id', row.id);
+                                let print = `{{ route('online-bikes.invoice.print', [":id","print"]) }}`.replace(':id', row.id);
+                                let edit = `{{ route('online-bikes.edit', ":id") }}`.replace(':id', row.id);
+                                let destroy = `{{ route('online-bikes.destroy', ":id") }}`.replace(':id', row.id);
                                 return (` <div class="d-flex justify-content-center">
-                                                 <a href="${print}" class="btn btn-sm btn-dark">
+                                                <a href="${print}" class="btn btn-sm btn-dark">
                                                     <i class="fa-solid fa-print"></i>
                                                 </a>
                                                 <a href="${view}" class="btn btn-sm btn-warning">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <a href="${edit}" class="btn btn-sm btn-info ${row.purchase_status == '1' ? 'disabled' : null}">
+                                                <a href="${edit}" class="btn btn-sm btn-info ${row.status == '1' ? 'disabled' : null}">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <form class="delete" action="${destroy}" method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.purchase_status == '1' ? "disabled" : null}>
+                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.status == '1' ? "disabled" : null}>
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                 </form>
@@ -268,7 +277,7 @@
                     cancelButtonText: "Cancel",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        const url = `{{ route('bike-purchases.approve', ":id") }}`.replace(':id', transaction_id);
+                        const url = `{{ route('online-bikes.approve', ":id") }}`.replace(':id', transaction_id);
                         $.ajax({
                             url: url,
                             method: 'GET',
@@ -283,9 +292,51 @@
                         });
                     }
                 });
+            });
+            $(document).on('click', '.nametransfer', function(e) {
+                e.preventDefault();
+                let transaction_id = $(this).attr('transaction_id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    input: 'date',
+                    inputLabel: 'Name Transfer Date',
+                    inputPlaceholder: 'Type your name here...',
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#198754",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Transfer",
+                    cancelButtonText: "Cancel",
+                    preConfirm: (value) => {
+                            if (!value) {
+                                Swal.showValidationMessage('Please Insert Name Transfer Date!')
+                            }
+                            return value;
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let date = result.value;
+                            const url = `{{ route('online-bikes.name-transfers', [":id", ":date"]) }}`.replace(':id', transaction_id).replace(':date', date);
+                            $.ajax({
+                                url: url,
+                                method: 'GET',
+                                dataType: 'JSON',
+                                success: function(res) {
+                                    message(res);
+                                    table.draw();
+                                },
+                                error: function(xhr, status, error) {
+                                    message(xhr.responseJSON);
+                                }
+                            });
+                        }
+                    });
 
             });
         });
+            
+
         function downloadImage(url){
             const link = document.createElement('a');
             link.href = url;
@@ -294,13 +345,13 @@
             link.click();
             document.body.removeChild(link);
         }
-        function generateTag(fileName = null) {
+       function generateTag(fileName = null) {
            const classList = 'd-flex justify-content-center align-items-center';
            const styleList = `height: 75px!important;width: 75px!important;border-radius:6px;border:1px solid #ccc;font-size:12px;text-align:center;font-weight: bold;cursor: pointer;`;
            let fileTag = `<div class="${classList}" style="height: 75px!important;width: 75px!important;border-radius:6px;border:1px solid #ccc;font-size:12px;text-align:center;cursor: not-allowed;background-color: #e0e0e0;">Empty</div>`;
             if (fileName){
                 const orginalExt = fileName.split('.').pop().toLowerCase();
-                const src = `{{ asset('public/uploads/bike-purchases/:file') }}`.replace(':file', fileName);
+                const src = `{{ asset('public/uploads/bike-sales/:file') }}`.replace(':file', fileName);
                 const extList = {
                     image: { tag: 'img', attrs: {}, extn: ['jpg','jpeg','png','gif','bmp','webp','svg'], useFReader: true },
                     pdf: { tag: 'embed', attrs: { type:'application/pdf' }, extn:['pdf'], useFReader: true },
@@ -324,5 +375,5 @@
             }
             return fileTag;
         }
-    </script>
+  </script>
 @endsection

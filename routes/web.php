@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\OnlineBikeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/clear', function() {   
@@ -283,6 +284,26 @@ Route::prefix('backend')->group(function () {
                 Route::get('buyer-search','buyerSearch')->name('bike-sales.buyer-search');
                 Route::get('broker-search','brokerSearch')->name('bike-sales.broker-search');
                 Route::get('bike-search','bikeSearch')->name('bike-sales.bike-search');
+            });
+
+            Route::prefix('online-bikes')->controller(OnlineBikeController::class)->group(function(){
+                Route::get('','index')->name('online-bikes.index');
+                Route::get('list','list')->name('online-bikes.list');
+
+
+                Route::get('create','createOrEdit')->name('online-bikes.create');
+                Route::get('edit/{id?}','createOrEdit')->name('online-bikes.edit');
+                Route::get('invoice/{id?}','invoice')->name('online-bikes.invoice');
+                Route::get('invoice/{id}/{print}','invoice')->name('online-bikes.invoice.print');
+                Route::post('store','store')->name('online-bikes.store');
+                Route::put('update/{id}','update')->name('online-bikes.update');
+                Route::delete('delete/{id}','destroy')->name('online-bikes.destroy');                        
+                Route::get('approve/{id}','approve')->name('online-bikes.approve'); 
+                Route::get('name-transfers/{id}/{date}','nameTransfer')->name('online-bikes.name-transfers'); 
+                Route::get('models/{brand_id}','models')->name('online-bikes.models');
+                Route::get('buyer-search','buyerSearch')->name('online-bikes.buyer-search');
+                Route::get('broker-search','brokerSearch')->name('online-bikes.broker-search');
+                Route::get('bike-search','bikeSearch')->name('online-bikes.bike-search');
             });
 
 

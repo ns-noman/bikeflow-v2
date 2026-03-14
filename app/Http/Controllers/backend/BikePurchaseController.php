@@ -118,7 +118,6 @@ class BikePurchaseController extends Controller
                     'model_id'        => $request->model_id,
                     'color_id'        => $request->color_id,
                     'manufacture_year'=> $request->manufacture_year,
-                    'bike_type'       => $request->bike_type,
                     'chassis_no'      => $request->chassis_no,
                     'engine_no'       => $request->engine_no,
                     'registration_no' => $request->registration_no,
@@ -213,29 +212,16 @@ class BikePurchaseController extends Controller
         $doc->move(public_path('uploads/'. 'bike-purchases'), $doc_name);
         return $doc_name;
     }
-    public function bikeImageUpload($attr_id, $data)
-    {
-        foreach($data['image'] as $image){
-            if($image){
-                $img_name = Str::uuid().'.'.$image->getClientOriginalExtension();
-                $image->move(public_path('uploads/'. 'new-bikes-imgs'), $img_name);
-                BikeAttributeImage::create(['image'=> $img_name, 'attribute_id'=> $attr_id]);
-            }
-        }
-    }
+
     public function createBikeAttribute($data)
     {
-        $images = $data['images'];
-        unset($data['images']);
         $ba = BikeAttribute::where($data)->first();
         if(!$ba){
             $ba = BikeAttribute::create($data);
-            $this->bikeImageUpload($ba->id,$images);
         }
         return $ba->id;
     }
-
-
+    
     public function update(Request $request, $id)
     {
         try {
@@ -434,7 +420,7 @@ class BikePurchaseController extends Controller
             'payment_methods.name as payment_method',
             'bikes.registration_no',
             'bikes.chassis_no',
-            'bikes.bike_type',
+            'bike_purchases.condition',
             'bike_purchases.seller_id',
             'bike_purchases.purchase_price',
             'bike_purchases.servicing_cost',
