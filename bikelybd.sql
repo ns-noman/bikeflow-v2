@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 14, 2026 at 10:18 AM
+-- Generation Time: Mar 31, 2026 at 12:04 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -1437,6 +1437,35 @@ INSERT INTO `bike_attribute_images` (`id`, `attribute_id`, `image`, `caption`, `
 (5, 265, '57d7fe31-1273-44e9-800a-602601707373.png', NULL, 0, '2026-03-09 03:28:59', '2026-03-09 03:28:59'),
 (6, 265, 'e1c27188-7084-4239-8606-c7f88694dc6d.png', NULL, 0, '2026-03-09 03:28:59', '2026-03-09 03:28:59'),
 (7, 265, '17133b5b-c127-4798-8434-23e0b0d0544f.jpeg', NULL, 0, '2026-03-09 03:28:59', '2026-03-09 03:28:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bike_listings`
+--
+
+CREATE TABLE `bike_listings` (
+  `id` bigint UNSIGNED NOT NULL,
+  `company_id` bigint UNSIGNED NOT NULL,
+  `bike_attribute_id` bigint UNSIGNED NOT NULL,
+  `used_bike_id` bigint DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `discount_price` decimal(10,2) DEFAULT NULL,
+  `negotiable` tinyint(1) NOT NULL DEFAULT '1',
+  `stock_quantity` int NOT NULL DEFAULT '1',
+  `condition` tinyint NOT NULL DEFAULT '0' COMMENT '0: Used, 1: New',
+  `mileage` int DEFAULT NULL,
+  `ownership_count` int NOT NULL DEFAULT '1',
+  `fitness_valid_until` date DEFAULT NULL,
+  `tax_valid_until` date DEFAULT NULL,
+  `insurance_valid_until` date DEFAULT NULL,
+  `use_default_image` tinyint(1) NOT NULL DEFAULT '1',
+  `is_online_posted` tinyint(1) NOT NULL DEFAULT '0',
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0: Pending, 1: Approved, 2: Rejected',
+  `approved_by_id` bigint UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -4874,26 +4903,19 @@ CREATE TABLE `frontend_menus` (
 
 CREATE TABLE `fund_transfer_histories` (
   `id` bigint UNSIGNED NOT NULL,
-  `company_id` bigint NOT NULL,
+  `company_id` int NOT NULL,
   `transfer_date` date NOT NULL,
   `from_account_id` bigint UNSIGNED NOT NULL,
   `to_account_id` bigint UNSIGNED NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` bigint UNSIGNED DEFAULT NULL,
   `updated_by_id` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `fund_transfer_histories`
---
-
-INSERT INTO `fund_transfer_histories` (`id`, `company_id`, `transfer_date`, `from_account_id`, `to_account_id`, `amount`, `reference_number`, `description`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, '2026-03-09', 1, 3, 1381.00, NULL, NULL, 1, 1, NULL, '2026-03-09 09:48:43', '2026-03-09 09:48:48');
 
 -- --------------------------------------------------------
 
@@ -6278,7 +6300,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (127, '2026_03_08_133524_create_bike_attributes_table', 65),
 (128, '2026_03_08_140924_create_bike_attribute_images_table', 65),
 (129, '2026_03_08_142944_add_bike_attribute_id_to_bikes', 66),
-(131, '2026_03_09_100047_create_companies_table', 68);
+(131, '2026_03_09_100047_create_companies_table', 68),
+(132, '2025_04_21_094759_create_fund_transfer_histories_table', 69),
+(133, '2026_03_31_162933_create_bike_listings_table', 70);
 
 -- --------------------------------------------------------
 
@@ -7391,6 +7415,15 @@ ALTER TABLE `bike_attribute_images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `bike_listings`
+--
+ALTER TABLE `bike_listings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bike_listings_company_id_index` (`company_id`),
+  ADD KEY `bike_listings_bike_attribute_id_index` (`bike_attribute_id`),
+  ADD KEY `bike_listings_status_index` (`status`);
+
+--
 -- Indexes for table `bike_models`
 --
 ALTER TABLE `bike_models`
@@ -7556,8 +7589,7 @@ ALTER TABLE `frontend_menus`
 -- Indexes for table `fund_transfer_histories`
 --
 ALTER TABLE `fund_transfer_histories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `company_id` (`company_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `investors`
@@ -7785,6 +7817,12 @@ ALTER TABLE `bike_attribute_images`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `bike_listings`
+--
+ALTER TABLE `bike_listings`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `bike_models`
 --
 ALTER TABLE `bike_models`
@@ -7932,7 +7970,7 @@ ALTER TABLE `frontend_menus`
 -- AUTO_INCREMENT for table `fund_transfer_histories`
 --
 ALTER TABLE `fund_transfer_histories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `investors`
@@ -7968,7 +8006,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `parties`
